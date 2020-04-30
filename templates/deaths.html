@@ -75,7 +75,7 @@
 </head>
 <body>
     <svg version="1.2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="graph" aria-labelledby="title" role="img">
-      <title id="title">Coronavirus cases </title>
+      <title id="title">Coronavirus deaths </title>
       <text class="graph-title" x="400" y="15">coronavirus deaths</text>
     <g class="grid y-grid" id="yGrid">
       <line x1="190" x2="190" y1="40" y2="421"></line>
@@ -85,55 +85,36 @@
       <line x1="190" x2="805" y1="420" y2="420"></line>
     </g>
       <g class="labels x-labels">
-          {% for c in range(0, dates_label_len_dth) %}
-              <text class="date_label" x={{ dic_dth.dt_lbl_loc[c] }} y="452">{{ dic_dth.dt_lbl_pt[c]}}</text>
-              <line class="sub-xgrid" x1="{{ dic_dth.dt_lbl_loc[c] }}" x2="{{ dic_dth.dt_lbl_loc[c] }}" y1="421" y2="40"></line>
+          {% for c in range(0, dt_lbl_len) %}
+              <text class="date_label" x={{ dic.dt_lbl_loc[c] }} y="452">{{ dic.dt_lbl_pt[0][c]}}</text>
+              <line class="sub-xgrid" x1="{{ dic.dt_lbl_loc[c] }}" x2="{{ dic.dt_lbl_loc[c] }}" y1="421" y2="40"></line>
           {% endfor %}
       <text x="155" y="450" class="label-title">Date</text>
     </g>
     <g class="labels y-labels">
-      <text x="180" y="423">0</text>
-      <text x="840" y="423">0</text>
-      {% for a in  range(0, world_label_len_dth) %}
-        <text x="180" y="{{dic_dth.wld_ylbl_loc[a] + 4 }}">{{dic_dth.wld_lbl[a]}}</text>
-        <line class="grid x-grid" id="xGrid" x1="190" x2="183" y1="{{dic_dth.wld_ylbl_loc[a]}}" y2="{{dic_dth.wld_ylbl_loc[a]}}" />
-        <line class="sub-wygrid" x1="190" x2="805" y1="{{dic_dth.wld_ylbl_loc[a]}}" y2="{{dic_dth.wld_ylbl_loc[a]}}"></line>
+      {% for a in  range(0, wld_lbl_len) %}
+        <text x="180" y="{{dic.wld_ylbl_loc[a] + 4 }}">{{dic.wld_lbl[a]}}</text>
+        <line class="grid x-grid" id="xGrid" x1="190" x2="183" y1="{{dic.wld_ylbl_loc[a]}}" y2="{{dic.wld_ylbl_loc[a]}}" />
+        <line class="sub-wygrid" x1="190" x2="805" y1="{{dic.wld_ylbl_loc[a]}}" y2="{{dic.wld_ylbl_loc[a]}}"></line>
       {% endfor %}
-      {% for a in  range(0, country_label_len_dth) %}
-        <text x="844" y="{{dic_dth.ctry_ylbl_loc[a] + 4}}">{{dic_dth.ctry_lbl[a]}}</text>
-        <line class="grid x-grid" id="xGrid" x1="806" x2="814" y1="{{dic_dth.ctry_ylbl_loc[a]}}" y2="{{dic_dth.ctry_ylbl_loc[a]}}" />
-        <line class="sub-cygrid" x1="190" x2="805" y1="{{dic_dth.ctry_ylbl_loc[a]}}" y2="{{dic_dth.ctry_ylbl_loc[a]}}"></line>
+      {% for a in  range(0, ctry_lbl_len) %}
+        <text x="844" y="{{dic.ctry_ylbl_loc[a] + 4}}">{{dic.ctry_lbl[a]}}</text>
+        <line class="grid x-grid" id="xGrid" x1="806" x2="814" y1="{{dic.ctry_ylbl_loc[a]}}" y2="{{dic.ctry_ylbl_loc[a]}}" />
+        <line class="sub-cygrid" x1="190" x2="805" y1="{{dic.ctry_ylbl_loc[a]}}" y2="{{dic.ctry_ylbl_loc[a]}}"></line>
       {% endfor %}
       <text  x="240" y="20" class="label-title">World [mil]</text>
       <text x="870" y="20" class="label-title">by Country [mil]</text>
     </g>
     <g class="data" data-setname="Our first data set">
-      {% for b in range(0,len_dth-1) %}
-        <circle cx="{{ dic_dth.dt_pt[b] }}" cy="{{ dic_dth.wld_pt[b] }}" r="0.5" stroke="black" fill="black"/>
-        <line stroke="black" stroke-width="2" x1="{{ dic_dth.dt_pt[b] }}" y1="{{ dic_dth.wld_pt[b] }}" x2="{{ dic_dth.dt_pt[b+1] }}" y2="{{ dic_dth.wld_pt[b+1] }}" />
-        <circle cx="{{ dic_dth.dt_pt[b] }}" cy="{{ dic_dth.br_pt[b] }}" r="0.5" stroke="yellow" fill="yellow"/>
-        <line stroke="yellow" stroke-width="2" x1="{{ dic_dth.dt_pt[b] }}" y1="{{ dic_dth.br_pt[b] }}" x2="{{ dic_dth.dt_pt[b+1] }}" y2="{{ dic_dth.br_pt[b+1] }}" />
-        <circle cx="{{ dic_dth.dt_pt[b] }}" cy="{{ dic_dth.sp_pt[b] }}" r="0.5" stroke="red" fill="red"/>
-        <line stroke="red" stroke-width="2" x1="{{ dic_dth.dt_pt[b] }}" y1="{{ dic_dth.sp_pt[b] }}" x2="{{ dic_dth.dt_pt[b+1] }}" y2="{{ dic_dth.sp_pt[b+1] }}" />
-        <circle cx="{{ dic_dth.dt_pt[b] }}" cy="{{ dic_dth.us_pt[b] }}" r="0.5" stroke="blue" fill="blue"/>
-        <line stroke="blue" stroke-width="2" x1="{{ dic_dth.dt_pt[b] }}" y1="{{ dic_dth.us_pt[b] }}" x2="{{ dic_dth.dt_pt[b+1] }}" y2="{{ dic_dth.us_pt[b+1] }}" />
-        <circle cx="{{ dic_dth.dt_pt[b] }}" cy="{{ dic_dth.it_pt[b] }}" r="0.5" stroke="green" fill="green"/>
-        <line stroke="green" stroke-width="2" x1="{{ dic_dth.dt_pt[b] }}" y1="{{ dic_dth.it_pt[b] }}" x2="{{ dic_dth.dt_pt[b+1] }}" y2="{{ dic_dth.it_pt[b+1] }}" />
-      {% endfor %}
-    </g>
-    <g>
-        <rect stroke="#ccc" stroke-width="1" fill="None" x="900" y="55" height="120" width="100"/>
-        <line stroke="black" stroke-width="2" x1="910" y1="75" x2="935" y2="75" />
-        <text text-anchor="start" font-weight="bold" fill="black" font-size="14" x="943" y="80">World</text>
-        <line stroke="blue" stroke-width="2" x1="910" y1="95" x2="935" y2="95" />
-        <text text-anchor="start" font-weight="bold" fill="black" font-size="14" x="943" y="100">US</text>
-        <line stroke="green" stroke-width="2" x1="910" y1="115" x2="935" y2="115" />
-        <text text-anchor="start" font-weight="bold" fill="black" font-size="14" x="943" y="120">Italy</text>
-        <line stroke="red" stroke-width="2" x1="910" y1="135" x2="935" y2="135" />
-        <text text-anchor="start" font-weight="bold" fill="black" font-size="14" x="943" y="140">Spain</text>
-        <line stroke="yellow" stroke-width="2" x1="910" y1="155" x2="935" y2="155" />
-        <text text-anchor="start" font-weight="bold" fill="black" font-size="14" x="943" y="160">Brazil</text>
-
+        {% for c in range(0,ctry_count) %}
+            {% for d in range(0, ctry_len[c]-1) %}
+                <circle cx="{{ dic.dt_pt[c][d] }}" cy="{{ dic.ctry_pt[c][d] }}" r="0.5" stroke="{{ dic.color[c] }}" fill="{{ dic.color[c] }}"/>
+                <line stroke="{{ dic.color[c] }}" stroke-width="2" x1="{{ dic.dt_pt[c][d] }}" y1="{{ dic.ctry_pt[c][d] }}" x2="{{ dic.dt_pt[c][d+1] }}" y2="{{ dic.ctry_pt[c][d+1] }}" />
+            {% endfor %}
+            <rect stroke="#ccc" stroke-width="1" fill="None" x="900" y="55" height="{{ 24*ctry_count }}" width="100"/>
+            <line stroke="{{ dic.color[c] }}" stroke-width="2" x1="910" y1="{{75 + 20 * c}}" x2="935" y2="{{75 + 20 * c}}" />
+            <text text-anchor="start" font-weight="bold" fill="{{ dic.color[c] }}" font-size="14" x="943" y="{{80 + 20 * c}}">{{ dic.ctry_list[c] }}</text>
+        {% endfor %}
     </g>
     </svg>
 
