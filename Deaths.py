@@ -10,9 +10,9 @@ class DeathsCsv:
     def csv(self):
         color = ['black','yellow', 'red', 'blue', 'green', 'orange', 'purple', 'pink', 'brown', 'grey']
         ctry_list = ['world', 'brazil', 'spain', 'us', 'italy','teste']
-        cases_svg = {'ctry_list': ctry_list, 'ctry_pt': [], 'ctry_len': [], 'dt_pt': [], 'dt_lbl_pt': [], 'dt_lbl_loc': [],
+        deaths_svg = {'ctry_list': ctry_list, 'ctry_pt': [], 'ctry_len': [], 'dt_pt': [], 'dt_lbl_pt': [], 'dt_lbl_loc': [],
                      'wld_ylbl_loc': [], 'ctry_ylbl_loc': [], 'wld_lbl': [],'ctry_lbl': [], 'color': color}
-        cases = {'wmax': [], 'cmax': [],'dt_lbl': [], 'diff_dt': [], 'dt_count': []}
+        deaths = {'wmax': [], 'cmax': [],'dt_lbl': [], 'diff_dt': [], 'dt_count': []}
 
         for pais in ctry_list:
             dt_lbls = []; ctry = []; dt = []; diff_dt = []; dt_count = []
@@ -28,9 +28,9 @@ class DeathsCsv:
             except:
                 print('arquivo invalido')                            #CRIAR LOG
             if pais == 'world':
-                cases['wmax'].append(ctry[-1])
+                deaths['wmax'].append(ctry[-1])
             else:
-                cases['cmax'].append(ctry[-1])
+                deaths['cmax'].append(ctry[-1])
             for a in range(0, len(dt)):
                 b = datetime.strptime(dt[a], '%d/%m/%Y %H:%M') - datetime.strptime(dt[1], '%d/%m/%Y %H:%M')
                 e = int(b.total_seconds()/60)
@@ -46,49 +46,52 @@ class DeathsCsv:
                     dt_count.append(count)
 
             dt_lbl = list(dict.fromkeys(dt_lbls))
-            cases_svg['ctry_pt'].append(ctry)
-            cases_svg['dt_pt'].append(dt)
-            cases_svg['dt_lbl_pt'].append(dt_lbl)
-            cases['diff_dt'].append(diff_dt)
-            cases['dt_count'].append(dt_count)
+            deaths_svg['ctry_pt'].append(ctry)
+            deaths_svg['dt_pt'].append(dt)
+            deaths_svg['dt_lbl_pt'].append(dt_lbl)
+            deaths['diff_dt'].append(diff_dt)
+            deaths['dt_count'].append(dt_count)
 
-        ymax = max(cases['cmax'], key=int)
-        for w in range(0,len(cases_svg['ctry_pt'][0])):
-            cases_svg['ctry_pt'][0][w] = (420 - (358 * (int(cases_svg['ctry_pt'][0][w]) / int(cases['wmax'][0]))))
+        ymax = max(deaths['cmax'], key=int)
+        for w in range(0,len(deaths_svg['ctry_pt'][0])):
+            deaths_svg['ctry_pt'][0][w] = (420 - (358 * (int(deaths_svg['ctry_pt'][0][w]) / int(deaths['wmax'][0]))))
 
-        for x in range(1,len(cases_svg['ctry_pt'])):
-            for z in range(0,len(cases_svg['ctry_pt'][x])):
-                cases_svg['ctry_pt'][x][z] = (420 - 358 * (int(cases_svg['ctry_pt'][x][z]) / int(ymax)))
-        for dd in range(0,len(cases_svg['dt_pt'])):
-            for d in range(0,len(cases_svg['dt_pt'][dd])):
-                cases_svg['dt_pt'][dd][d] = (615 * (cases['diff_dt'][dd][d] / cases['diff_dt'][dd][-1]) + 190)
+        for x in range(1,len(deaths_svg['ctry_pt'])):
+            for z in range(0,len(deaths_svg['ctry_pt'][x])):
+                deaths_svg['ctry_pt'][x][z] = (420 - 358 * (int(deaths_svg['ctry_pt'][x][z]) / int(ymax)))
+        for dd in range(0,len(deaths_svg['dt_pt'])):
+            for d in range(0,len(deaths_svg['dt_pt'][dd])):
+                deaths_svg['dt_pt'][dd][d] = (615 * (deaths['diff_dt'][dd][d] / deaths['diff_dt'][dd][-1]) + 190)
 
-        if ((int(cases['wmax'][0]) / 1000000) -  (int(int(cases['wmax'][0]) / 1000000))) >= 0.5:
-            for wz in range(0, (int(int(cases['wmax'][0]) / 100000)) + 2):
-                cases_svg['wld_lbl'].append(wz*100)
-                cases_svg['wld_ylbl_loc'].append(420 - wz * 100000 * (358 / int(cases['wmax'][0])))
+        if ((int(deaths['wmax'][0]) / 1000000) - (int(int(deaths['wmax'][0]) / 1000000))) >= 0.5:
+            for wz in range(0, (int(int(deaths['wmax'][0]) / 50000)) + 2):
+                deaths_svg['wld_lbl'].append(wz*50)
+                deaths_svg['wld_ylbl_loc'].append(420 - wz * 50000 * (358 / int(deaths['wmax'][0])))
         else:
-            for wz in range(0, (int(int(cases['wmax'][0]) / 100000) + 1)):
-                cases_svg['wld_lbl'].append(wz*100)
-                cases_svg['wld_ylbl_loc'].append(420 - wz * 100000 * (358 / int(cases['wmax'][0])))
+            for wz in range(0, (int(int(deaths['wmax'][0]) / 50000) + 1)):
+                deaths_svg['wld_lbl'].append(wz*50)
+                deaths_svg['wld_ylbl_loc'].append(420 - wz * 50000 * (358 / int(deaths['wmax'][0])))
 
         if ((int(ymax) / 200000) - int(int(ymax) / 10000)) >= 0.5:
             for cz in range(0, (int(int(ymax) / 10000) + 2)):
-                cases_svg['ctry_lbl'].append(cz*10)
-                cases_svg['ctry_ylbl_loc'].append(420 - cz * 10000 * (358 / int(ymax)))
+                deaths_svg['ctry_lbl'].append(cz*10)
+                deaths_svg['ctry_ylbl_loc'].append(420 - cz * 10000 * (358 / int(ymax)))
         else:
             for cz in range(0, (int(int(ymax) / 10000) + 1)):
-                cases_svg['ctry_lbl'].append(cz * 10)
-                cases_svg['ctry_ylbl_loc'].append(420 - cz * 10000 * (358 / int(ymax)))
+                deaths_svg['ctry_lbl'].append(cz * 10)
+                deaths_svg['ctry_ylbl_loc'].append(420 - cz * 10000 * (358 / int(ymax)))
 
-        for ddl in range(0, len(cases_svg['dt_pt'])):
-            for dl in cases['dt_count'][ddl]:
-                cases_svg['dt_lbl_loc'].append(cases_svg['dt_pt'][ddl][dl])
-                cases_svg['dt_lbl_loc'] = list(dict.fromkeys(cases_svg['dt_lbl_loc']))
+        for ddl in range(0, len(deaths_svg['dt_pt'])):
+            for dl in deaths['dt_count'][ddl]:
+                deaths_svg['dt_lbl_loc'].append(deaths_svg['dt_pt'][ddl][dl])
+                deaths_svg['dt_lbl_loc'] = list(dict.fromkeys(deaths_svg['dt_lbl_loc']))
 
         ctry_len = []
-        for a in range(0, len(cases_svg['ctry_list'])):
-            ctry_len.append(len(cases_svg['ctry_pt'][a]))
-        cases_svg['ctry_len'].append(ctry_len)
-        
-        return cases_svg
+        for a in range(0, len(deaths_svg['ctry_list'])):
+            ctry_len.append(len(deaths_svg['ctry_pt'][a]))
+        deaths_svg['ctry_len'].append(ctry_len)
+
+        return deaths_svg
+
+if __name__ == "__main__":
+    a = DeathsCsv().csv()
